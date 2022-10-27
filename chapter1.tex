@@ -1,0 +1,49 @@
+\chapter{Supervised learning}
+\section{Linear Models}
+The following are a set of methods intended for regression in which the target value is expected to be a linear combination of the features. In mathematical notation, if $\hat{y}$ is the predicted value.
+\begin{equation}
+\hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
+\end{equation}
+
+Across the module, we designate the vector  $w = (w_1,
+..., w_p)$ as \verb|coef_| and  $w_0$ as \verb|intercept_|.
+
+To perform classification with generalized linear models, see \nameref{Logistic regression}.
+\subsection{Ordinary Least Squares}
+LinearRegression fits a linear model with coefficients $w = (w_1, ..., w_p)$ to minimize the residual sum of squares between the observed targets in the dataset, and the targets predicted by the linear approximation. Mathematically it solves a problem of the form:
+\begin{equation}
+\min_{w} || X w - y||_2^2
+\end{equation}
+
+LinearRegression will take in its \verb|fit| method arrays X, y and will store the coefficients $w$ of the linear model in its \verb|coef_| member:
+\begin{minted}{python}
+from sklearn import linear_model
+reg = linear_model.LinearRegression()
+reg.fit([[0, 0], [1, 1], [2, 2]], [0, 1, 2])
+reg.coef_
+\end{minted}
+The coefficient estimates for Ordinary Least Squares \textbf{rely on the independence of the features}. When features are correlated and the columns of the design matrix $X$ have an approximately linear dependence, the design matrix becomes close to singular and as a result, the least-squares estimate becomes highly sensitive to random errors in the observed target, producing a large variance. This situation of multicollinearity can arise, for example, when data are collected without an experimental design.
+
+\textbf{Examples:}
+\begin{itemize}
+\item \nameref{Linear Regression Example}
+\end{itemize}
+\subsubsection{Non-Negative Least Squares}
+It is possible to constrain all the coefficients to be non-negative, which may be useful when they represent some physical or naturally non-negative quantities (e.g., frequency counts or prices of goods). LinearRegression accepts a boolean \verb|positive| parameter: when set to \verb|True| Non-Negative Least Squares are then applied.
+\textbf{Examples:}
+\begin{itemize}
+\item \nameref{Non-negative least squares}
+\end{itemize}
+
+\subsubsection{Ordinary Least Squares Complexity}
+
+
+\subsection{Ridge regression and classification}
+\subsection{Lasso}
+\subsection{Multi-task Lasso}
+
+\subsection{Logistic regression\label{Logistic regression}}
+
+
+
+
