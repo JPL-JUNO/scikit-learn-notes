@@ -1,11 +1,13 @@
-\title{Scikit Learn Notes}
+\title{Scikit-Learn Notes}
 \author{Stephen CUI}
 \date{October, 25, 2022}
 \usepackage{mathptmx}
+\usepackage{amsmath}
+
 
 \usepackage{tcolorbox}
-\tcbuselibrary{minted, skins}
-\newtcblisting[auto counter=chapter]{py}[1]{listing engine=minted,
+\tcbuselibrary{minted, skins, breakable}
+\newtcblisting[auto counter=section]{py}[1]{listing engine=minted,
 				minted style=colorful,
 				minted language=python,
 				minted options={fontsize=\small,
@@ -13,18 +15,13 @@
 							  autogobble,
 							  numbersep=3mm,
 							  linenos},
-				title={Recipes~\thetcbcounter ~#1},
+				title={Example~\thetcbcounter ~#1},
 				colback=red!5!white,
 				colframe=red!80!black,
 				listing only,
 				left=5mm,
 				enhanced,
-				overlay={
-						\begin{tcbclipinterior}
-						\fill[red!20!white](frame.south west)
-						rectangle ([xshift=5mm]frame.north west);
-						\end{tcbclipinterior}
-					}
+				breakable,
 				}
 				
 
@@ -41,8 +38,8 @@
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks=true,
-	linkcolor=blue,
+	linkcolor=blue!65!black,
 	filecolor=red,      
-	urlcolor=cyan,
+	urlcolor=green!50!black,
 	citecolor=green,
 }
