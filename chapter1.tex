@@ -1,5 +1,5 @@
 \chapter{Supervised learning}
-\section{Linear Models}
+\section{Linear Models\label{Linear Models}}
 The following are a set of methods intended for regression in which the target value is expected to be a linear combination of the features. In mathematical notation, if $\hat{y}$ is the predicted value.
 \begin{equation}
 \hat{y}(w, x) = w_0 + w_1 x_1 + ... + w_p x_p
@@ -9,7 +9,7 @@ Across the module, we designate the vector  $w = (w_1,
 ..., w_p)$ as \verb|coef_| and  $w_0$ as \verb|intercept_|.
 
 To perform classification with generalized linear models, see \nameref{Logistic regression}.
-\subsection{Ordinary Least Squares}
+\subsection{Ordinary Least Squares\label{Ordinary Least Squares}}
 LinearRegression fits a linear model with coefficients $w = (w_1, ..., w_p)$ to minimize the residual sum of squares between the observed targets in the dataset, and the targets predicted by the linear approximation. Mathematically it solves a problem of the form:
 \begin{equation}
 \min_{w} || X w - y||_2^2
@@ -24,21 +24,46 @@ reg.coef_
 \end{minted}
 The coefficient estimates for Ordinary Least Squares \textbf{rely on the independence of the features}. When features are correlated and the columns of the design matrix $X$ have an approximately linear dependence, the design matrix becomes close to singular and as a result, the least-squares estimate becomes highly sensitive to random errors in the observed target, producing a large variance. This situation of multicollinearity can arise, for example, when data are collected without an experimental design.
 
-\textbf{Examples:}
+\subsubsection{Examples:}
 \begin{itemize}
 \item \nameref{Linear Regression Example}
 \end{itemize}
 \subsubsection{Non-Negative Least Squares}
 It is possible to constrain all the coefficients to be non-negative, which may be useful when they represent some physical or naturally non-negative quantities (e.g., frequency counts or prices of goods). LinearRegression accepts a boolean \verb|positive| parameter: when set to \verb|True| Non-Negative Least Squares are then applied.
-\textbf{Examples:}
+\subsubsection{Examples:}
 \begin{itemize}
 \item \nameref{Non-negative least squares}
 \end{itemize}
 
 \subsubsection{Ordinary Least Squares Complexity}
-
+The least squares solution is computed using the singular value decomposition of X. If X is a matrix of shape \verb|(n_samples, n_features)| this method has a cost of $O(n_{\text{samples}} n_{\text{features}}^2)$, assuming that $n_{\text{samples}} \geq n_{\text{features}}$.
 
 \subsection{Ridge regression and classification}
+\subsubsection{Regression}
+Ridge regression addresses some of the problems of \nameref{Ordinary Least Squares} \textbf{by imposing a penalty on the size of the coefficients}. The ridge coefficients minimize a penalized residual sum of squares:
+\begin{equation}
+\min_{w} || X w - y||_2^2 + \alpha ||w||_2^2
+\end{equation}
+
+The complexity parameter $\alpha\ge 0$ controls the amount of shrinkage: the larger the value of $\alpha$, the greater the amount of shrinkage and thus the coefficients become more robust to collinearity.
+
+\subsubsection{Classification}
+
+The Ridge regressor has a classifier variant: RidgeClassifier. This classifier first converts binary targets to \verb|{-1, 1}| and then treats the problem as a regression task, optimizing the same objective as above. The predicted class corresponds to the sign of the regressor’s prediction. For multiclass classification, the problem is treated as multi-output regression, and the predicted class corresponds to the output with the highest value.
+
+It might seem questionable to use a (penalized) Least Squares loss to fit a classification model instead of the more traditional logistic or hinge losses. However, in practice, all those models can lead to similar cross-validation scores in terms of accuracy or precision/recall, while the penalized least squares loss used by the RidgeClassifier allows for a very different choice of the numerical solvers with distinct computational performance profiles.
+
+The RidgeClassifier can be significantly faster than e.g. LogisticRegression with a high number of classes because it can compute the projection matrix $(X^T X)^{-1} X^T$ only once.
+
+This classifier is sometimes referred to as a \href{https://en.wikipedia.org/wiki/Least-squares_support_vector_machine}{Least Squares Support Vector Machines} with a linear kernel.
+\subsubsection{Example}
+\begin{itemize}
+\item \nameref{Plot Ridge coefficients as a function of the regularization}
+\item \nameref{Classification of text documents using sparse features}
+
+\item \href{https://en.wikipedia.org/wiki/Hilbert_matrix}{Hilbert matrix}
+
+\end{itemize}
 \subsection{Lasso}
 \subsection{Multi-task Lasso}
 
